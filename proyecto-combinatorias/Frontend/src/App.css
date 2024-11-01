@@ -1,23 +1,35 @@
+/* Contenedor principal */
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #1e1e2f;
+  color: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
 }
 
+/* Logo */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: filter 300ms, transform 300ms;
+  cursor: pointer;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #6a6cffaa);
+  transform: scale(1.1);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+  transform: scale(1.1);
 }
 
+/* Animación de giro para el logo */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -27,16 +39,79 @@
   }
 }
 
+/* Aplicar animación solo si se permite */
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
 
+/* Tarjeta */
 .card {
-  padding: 2em;
+  padding: 2.5em;
+  background: linear-gradient(135deg, #292942, #1f1f2e);
+  border: 1px solid #3b3b5f;
+  border-radius: 15px;
+  margin: 1.5em 0;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  transition: transform 250ms, box-shadow 250ms, background 250ms;
+}
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #323259, #25253a);
 }
 
+/* Botón */
+button {
+  background-color: #6a6cff;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8em 1.5em;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 300ms, transform 200ms;
+}
+button:hover {
+  background-color: #5959e6;
+  transform: scale(1.05);
+}
+
+/* Enlace de documentación */
 .read-the-docs {
-  color: #888;
+  color: #8c8cdd;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: color 200ms;
+}
+.read-the-docs:hover {
+  color: #c4c4ff;
+}
+
+/* Texto de encabezado */
+h1 {
+  font-size: 2.8em;
+  line-height: 1.2;
+  color: #c4c4ff;
+}
+
+/* Estilo para entradas de usuario */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.8em;
+  margin: 0.5em 0;
+  border-radius: 8px;
+  border: 1px solid #3b3b5f;
+  background-color: #2b2b44;
+  color: #f5f5f5;
+  font-size: 1em;
+  outline: none;
+  transition: border-color 250ms;
+}
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: #6a6cff;
 }
