@@ -24,11 +24,9 @@ export default function App() {
       return;
     }
 
-    // Calcular número total de combinaciones
     const combinationResult = factorial(nNum) / (factorial(rNum) * factorial(nNum - rNum));
     setResult(combinationResult);
 
-    // Generar combinaciones sin restricción de cantidad
     const generateCombinations = (arr: number[], r: number): string[] => {
       if (r === 1) return arr.map(String);
       const result: string[] = [];
@@ -44,13 +42,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-800 via-purple-600 to-purple-900 p-4">
       <Card>
-        <header className="border-b border-purple-500 p-4">
-          <h2 className="text-2xl font-bold text-purple-300">Calculadora de Combinatoria</h2>
-          <p className="text-blue-300">Ingresa los valores para calcular las combinaciones</p>
+        <header className="text-center p-4">
+          <h2 className="text-3xl font-bold text-white mb-2">Calculadora de Combinatoria</h2>
+          <p className="text-purple-200">Ingresa los valores para calcular las combinaciones</p>
         </header>
-        <section className="p-4 space-y-4">
+        <section className="p-6 space-y-4">
           <div className="space-y-2">
             <Label htmlFor="n">Número total de elementos (n)</Label>
             <Input
@@ -71,14 +69,16 @@ export default function App() {
               onChange={(e) => setR(e.target.value)}
             />
           </div>
-          <Button onClick={calculateCombinations}>Calcular</Button>
+          <Button onClick={calculateCombinations} className="w-full bg-purple-600 hover:bg-purple-700">
+            Calcular
+          </Button>
         </section>
-        <footer className="border-t border-purple-500 p-4">
+        <footer className="text-center p-4">
           {result !== null && (
-            <div className="space-y-2 w-full">
-              <p className="text-lg font-semibold text-blue-300">Resultado: {result}</p>
-              <p className="text-purple-300 font-semibold">Algunas combinaciones:</p>
-              <ul className="list-disc list-inside text-blue-200 space-y-1">
+            <div className="space-y-2">
+              <p className="text-xl font-semibold text-white">Resultado: {result}</p>
+              <p className="text-purple-300 font-medium">Algunas combinaciones:</p>
+              <ul className="list-disc list-inside text-purple-200 space-y-1 max-h-32 overflow-y-auto">
                 {combinations.slice(0, 10).map((combo, index) => (
                   <li key={index}>{`{${combo}}`}</li>
                 ))}
