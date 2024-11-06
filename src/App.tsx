@@ -5,6 +5,13 @@ import { Button } from './components/Button';
 import { Input } from './components/Input';
 import { Label } from './components/Label';
 import { Card } from './components/Card';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export default function App() {
   const [n, setN] = useState<string>('');
@@ -12,6 +19,7 @@ export default function App() {
   const [withRepetition, setWithRepetition] = useState<boolean>(false);
   const [result, setResult] = useState<number | null>(null);
   const [variations, setVariations] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // Función factorial
   const factorial = (num: number): number => (num <= 1 ? 1 : num * factorial(num - 1));
@@ -31,7 +39,6 @@ export default function App() {
       const variationResult = Math.pow(nNum, rNum);
       setResult(variationResult);
 
-      // Generar variaciones con repetición
       const generateVariationsWithRepetition = (
         elements: number[],
         r: number,
@@ -53,18 +60,15 @@ export default function App() {
       setVariations(generateVariationsWithRepetition(elements, rNum));
 
     } else {
-      // Validación adicional para VsR
       if (nNum < rNum) {
         setResult(null);
         setVariations([]);
         return;
       }
 
-      // Fórmula VSR: Vn,r = n!/(n-r)!
       const variationResult = factorial(nNum) / factorial(nNum - rNum);
       setResult(variationResult);
 
-      // Generar variaciones sin repetición
       const generateVariationsWithoutRepetition = (
         elements: number[],
         r: number,
@@ -86,6 +90,8 @@ export default function App() {
       const elements = [...Array(nNum).keys()].map((i) => i + 1);
       setVariations(generateVariationsWithoutRepetition(elements, rNum));
     }
+    
+    setIsModalOpen(true);
   };
 
   return (
@@ -132,30 +138,51 @@ export default function App() {
             Calcular
           </Button>
         </section>
-        <footer className="text-center p-4">
+      </Card>
+
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Resultados del Cálculo</DialogTitle>
+          </DialogHeader>
           {result !== null && (
-            <div className="space-y-2">
-              <p className="text-xl font-semibold text-white">
-                Resultado: {result}
-              </p>
-              <p className="text-blue-300 font-medium">
-                Tipo: Variaciones {withRepetition ? 'con' : 'sin'} repetición
-              </p>
-              <p className="text-blue-300 font-medium">Algunas variaciones:</p>
-              <ul className="list-disc list-inside text-blue-200 space-y-1 max-h-32 overflow-y-auto">
-                {variations.slice(0, 10).map((variation, index) => (
-                  <li key={index}>{`(${variation})`}</li>
-                ))}
-              </ul>
-              {variations.length > 10 && (
-                <p className="text-sm text-gray-400 mt-2">
-                  (Mostrando las primeras 10 variaciones de un total de {variations.length})
+            <div className="space-y-4">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <p className="text-xl font-semibold text-blue-900">
+                  Total de variaciones: {result}
                 </p>
-              )}
+                <p className="text-blue-700">
+                  Tipo: Variaciones {withRepetition ? 'con' : 'sin'} repetición
+                </p>
+                <p className="text-blue-700">
+                  Parámetros: n={n}, r={r}
+                </p>
+              </div>
+              
+              <div className="space-y-2">
+                <h3 className="font-medium text-gray-900">Algunas variaciones posibles:</h3>
+                <div className="max-h-60 overflow-y-auto bg-gray-50 p-4 rounded-lg">
+                  <ul className="space-y-1">
+                    {variations.slice(0, 10).map((variation, index) => (
+                      <li key={index} className="text-gray-700">
+                        {`(${variation})`}
+                      </li>
+                    ))}
+                  </ul>
+                  {variations.length > 10 && (
+                    <p className="text-sm text-gray-500 mt-2">
+                      (Mostrando las primeras 10 variaciones de un total de {variations.length})
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
           )}
-        </footer>
-      </Card>
+          <DialogFooter>
+            <Button onClick={() => setIsModalOpen(false)}>Cerrar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
